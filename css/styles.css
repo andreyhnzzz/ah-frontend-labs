@@ -7,6 +7,9 @@
     --accent-hover: #C9A020;
     --border: rgba(212, 175, 55, 0.35);
     --shadow: rgba(0, 0, 0, 0.35);
+    --glass-bg: rgba(26, 26, 26, 0.62);
+    --magnetic-x: 0px;
+    --magnetic-y: 0px;
 }
 
 body.modo-claro {
@@ -18,6 +21,13 @@ body.modo-claro {
     --accent-hover: #6B5740;
     --border: rgba(139, 115, 85, 0.3);
     --shadow: rgba(45, 36, 28, 0.16);
+    --glass-bg: rgba(255, 255, 255, 0.72);
+}
+
+@property --gold-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 115deg;
 }
 
 * {
@@ -36,6 +46,12 @@ body {
     font-size: 1rem;
     line-height: 1.6;
     transition: background-color 180ms ease, color 180ms ease;
+}
+
+main {
+    overflow-x: clip;
+    perspective: 1px;
+    transform-style: preserve-3d;
 }
 
 img {
@@ -116,6 +132,8 @@ summary:focus {
     min-height: calc(100vh - 6.5rem);
     padding: 4rem 2rem;
     overflow: hidden;
+    perspective: 1px;
+    transform-style: preserve-3d;
 }
 
 .hero__image,
@@ -128,6 +146,8 @@ summary:focus {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: translateZ(-1px) scale(2.02);
+    transform-origin: center;
 }
 
 .hero__overlay {
@@ -181,11 +201,10 @@ h3 {
     border-radius: 0.5rem;
     text-decoration: none;
     font-weight: 700;
-    transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+    transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, opacity 420ms ease;
 }
 
-.button:hover,
-.contact-link:hover {
+.button:hover {
     transform: translateY(-2px);
 }
 
@@ -197,8 +216,10 @@ h3 {
 }
 
 .button--primary {
-    background: var(--accent);
+    background: linear-gradient(var(--gold-angle), var(--accent), #f7df8a 42%, var(--accent-hover));
     color: #0A0A0A;
+    animation: gold-shift 7s ease-in-out infinite alternate;
+    box-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 .button--primary:hover {
@@ -239,8 +260,16 @@ h3 {
     padding: 1.5rem;
     border: 1px solid var(--border);
     border-radius: 0.5rem;
-    background: var(--bg-secondary);
+    background: var(--glass-bg);
     box-shadow: 0 1rem 2.5rem var(--shadow);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .guarantee-card {
+        background: var(--bg-secondary);
+    }
 }
 
 .guarantee-card__icon {
@@ -275,11 +304,20 @@ h3 {
     padding: 0.9rem 1rem;
     border: 1px solid var(--border);
     background: transparent;
+    transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0);
+}
+
+.contact-link:hover {
+    transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0) translateY(-2px);
 }
 
 .contact-link--primary {
     border: 2px solid var(--accent);
     box-shadow: 0 0 1.5rem color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.contact-link.is-magnetic {
+    will-change: transform;
 }
 
 .contact-link img {
@@ -324,6 +362,75 @@ details p {
 .site-footer p {
     margin-bottom: 0;
     font-size: 0.875rem;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-link.reveal {
+    transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0) translateY(1.5rem);
+}
+
+.contact-link.reveal.is-visible {
+    transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0);
+}
+
+.contact-link.reveal.is-visible:hover {
+    transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0) translateY(-2px);
+}
+
+.guarantee-card.reveal:nth-child(2),
+.contact-link.reveal:nth-child(2) {
+    transition-delay: 90ms;
+}
+
+.guarantee-card.reveal:nth-child(3),
+.contact-link.reveal:nth-child(3) {
+    transition-delay: 180ms;
+}
+
+.guarantee-card.reveal:nth-child(4) {
+    transition-delay: 270ms;
+}
+
+@keyframes gold-shift {
+    from {
+        --gold-angle: 95deg;
+    }
+
+    to {
+        --gold-angle: 150deg;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .hero__image,
+    .reveal,
+    .reveal.is-visible,
+    .contact-link {
+        transform: none;
+    }
 }
 
 @media (max-width: 768px) {
