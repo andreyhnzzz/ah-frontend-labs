@@ -4,24 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Perfumería premium en Ciudad Quesada, Costa Rica. Perfumes de diseñador, árabes y de nicho con contacto directo por WhatsApp, Instagram y TikTok.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://enigmaessence.cr/">
+    <meta property="og:title" content="Enigma Essence | Perfumería Premium">
+    <meta property="og:description" content="Perfumes de diseñador, árabes y de nicho seleccionados para quienes buscan una presencia elegante y memorable.">
+    <meta property="og:image" content="img/banner.webp">
+    <meta property="og:locale" content="es_CR">
+    <meta property="og:site_name" content="Enigma Essence">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://enigmaessence.cr/">
+    <meta name="twitter:title" content="Enigma Essence | Perfumería Premium">
+    <meta name="twitter:description" content="Perfumes de diseñador, árabes y de nicho en Ciudad Quesada, Costa Rica.">
+    <meta name="twitter:image" content="img/banner.webp">
+    <link rel="canonical" href="https://enigmaessence.cr/">
     <title>Enigma Essence | Perfumería Premium</title>
     <link rel="icon" href="img/favico.ico">
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/main.js" defer></script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Enigma Essence",
+            "description": "Perfumería premium en Ciudad Quesada, Costa Rica. Perfumes de diseñador, árabes y de nicho.",
+            "url": "https://enigmaessence.cr/",
+            "telephone": "+50689453430",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Ciudad Quesada",
+                "addressCountry": "CR"
+            },
+            "openingHours": "Mo-Sa 09:00-20:00",
+            "priceRange": "$$",
+            "image": "img/banner.webp"
+        }
+    </script>
 </head>
 <body>
-    <header class="site-header">
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <div id="announcements" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+    <header class="site-header" role="banner">
         <a class="brand" href="#hero" aria-label="Ir al inicio de Enigma Essence">
             <img src="img/logo.svg" alt="Logo de Enigma Essence Perfumería" width="72" height="72">
             <span>Enigma Essence</span>
         </a>
 
-        <button class="theme-toggle" type="button" aria-label="Cambiar a modo claro" aria-pressed="false">
-            <span class="theme-toggle__icon" aria-hidden="true">☾</span>
-        </button>
+        <nav class="main-nav" role="navigation" aria-label="Controles principales">
+            <button class="theme-toggle" type="button" aria-label="Cambiar a modo claro" aria-pressed="false" aria-describedby="theme-description">
+                <span class="theme-toggle__icon" aria-hidden="true">☾</span>
+            </button>
+            <span id="theme-description" class="sr-only">Este botón cambia entre modo oscuro y claro.</span>
+        </nav>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
         <section id="hero" class="hero" aria-labelledby="hero-section-title">
             <h2 id="hero-section-title" class="sr-only">Inicio de Enigma Essence</h2>
             <img class="hero__image" src="img/banner.webp" alt="Frascos de perfumes premium de Enigma Essence presentados con estética elegante">
@@ -93,31 +130,50 @@
             </div>
         </section>
 
-        <section id="faq" class="section reveal" aria-labelledby="faq-title">
+        <section id="faq" class="section reveal" aria-labelledby="faq-title" itemscope itemtype="https://schema.org/FAQPage">
             <div class="section__inner faq">
                 <h2 id="faq-title">Preguntas Frecuentes</h2>
-                <details>
-                    <summary>¿Cuánto tarda el envío fuera de Ciudad Quesada?</summary>
-                    <p>Los envíos se procesan en 24 horas y llegan a su destino en un máximo de 3 días hábiles.</p>
-                </details>
-                <details>
-                    <summary>¿Qué métodos de pago aceptan?</summary>
-                    <p>Aceptamos Sinpe Móvil al +506 89453430, transferencia bancaria y efectivo para entregas personales.</p>
-                </details>
-                <details>
-                    <summary>¿Cuál es la política de devoluciones?</summary>
-                    <p>Si el producto llega dañado, lo reponemos gratis. Escríbenos con fotos del paquete y del frasco el mismo día de la entrega.</p>
-                </details>
-                <details>
-                    <summary>¿Cómo puedo pedir al mayoreo?</summary>
-                    <p>Contáctanos por WhatsApp para revisar disponibilidad, fragancias y precios especiales desde 5 piezas.</p>
-                </details>
+                <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <details>
+                        <summary itemprop="name">¿Cuánto tarda el envío fuera de Ciudad Quesada?</summary>
+                        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                            <p itemprop="text">Los envíos se procesan en 24 horas y llegan a su destino en un máximo de 3 días hábiles.</p>
+                        </div>
+                    </details>
+                </article>
+                <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <details>
+                        <summary itemprop="name">¿Qué métodos de pago aceptan?</summary>
+                        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                            <p itemprop="text">Aceptamos Sinpe Móvil al +506 89453430, transferencia bancaria y efectivo para entregas personales.</p>
+                        </div>
+                    </details>
+                </article>
+                <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <details>
+                        <summary itemprop="name">¿Cuál es la política de devoluciones?</summary>
+                        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                            <p itemprop="text">Si el producto llega dañado, lo reponemos gratis. Escríbenos con fotos del paquete y del frasco el mismo día de la entrega.</p>
+                        </div>
+                    </details>
+                </article>
+                <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <details>
+                        <summary itemprop="name">¿Cómo puedo pedir al mayoreo?</summary>
+                        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                            <p itemprop="text">Contáctanos por WhatsApp para revisar disponibilidad, fragancias y precios especiales desde 5 piezas.</p>
+                        </div>
+                    </details>
+                </article>
             </div>
         </section>
+
     </main>
 
-    <footer class="site-footer">
-        <p>© 2026 Enigma Essence. Todos los derechos reservados.</p>
+    <footer class="site-footer" role="contentinfo">
+        <address class="site-footer__contact">
+            <p>© 2026 Enigma Essence. Todos los derechos reservados.</p>
+        </address>
     </footer>
 </body>
 </html>
