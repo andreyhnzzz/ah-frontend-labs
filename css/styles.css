@@ -1,13 +1,22 @@
 :root {
     --bg-primary: #0A0A0A;
     --bg-secondary: #1A1A1A;
-    --text-primary: #F5F5F5;
-    --text-secondary: #E0E0E0;
+    --text-primary: #FFFFFF;
+    --text-secondary: #CCCCCC;
     --accent: #D4AF37;
     --accent-hover: #C9A020;
     --border: rgba(212, 175, 55, 0.35);
     --shadow: rgba(0, 0, 0, 0.35);
     --glass-bg: rgba(26, 26, 26, 0.62);
+    --glow-intensity: 0.4;
+    --blur-strength: 14px;
+    --transition-speed: 180ms;
+    --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 2rem;
+    --space-xl: 4rem;
     --magnetic-x: 0px;
     --magnetic-y: 0px;
 }
@@ -15,9 +24,9 @@
 body.modo-claro {
     --bg-primary: #F9F6F0;
     --bg-secondary: #FFFFFF;
-    --text-primary: #2D241C;
-    --text-secondary: #4A3F35;
-    --accent: #8B7355;
+    --text-primary: #1A1A1A;
+    --text-secondary: #4A4A4A;
+    --accent: #8B6914;
     --accent-hover: #6B5740;
     --border: rgba(139, 115, 85, 0.3);
     --shadow: rgba(45, 36, 28, 0.16);
@@ -35,6 +44,7 @@ body.modo-claro {
 }
 
 html {
+    font-size: clamp(14px, 2vw, 18px);
     scroll-behavior: smooth;
 }
 
@@ -45,7 +55,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     font-size: 1rem;
     line-height: 1.6;
-    transition: background-color 180ms ease, color 180ms ease;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 main {
@@ -78,9 +88,51 @@ a {
 
 button:focus,
 a:focus,
-summary:focus {
+summary:focus,
+input:focus {
     outline: 3px solid var(--accent);
     outline-offset: 2px;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px var(--bg-primary), 0 0 0 6px var(--accent);
+}
+
+.contact-link:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+details:focus-within {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-radius: 0.25rem;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    z-index: 9999;
+    padding: 1rem 2rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    background: var(--accent);
+    color: #0A0A0A;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateX(-50%);
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 0;
 }
 
 .site-header {
@@ -94,7 +146,7 @@ summary:focus {
     padding: 1rem 2rem;
     background: color-mix(in srgb, var(--bg-primary) 92%, transparent);
     border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(var(--blur-strength));
 }
 
 .brand {
@@ -162,6 +214,7 @@ body.modo-claro .hero__overlay {
     position: relative;
     z-index: 1;
     width: min(100%, 45rem);
+    animation: fade-in-up 1s ease-out 0.3s both;
 }
 
 h1,
@@ -173,13 +226,14 @@ p {
 
 h1 {
     margin-bottom: 1rem;
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 1.15;
+    animation: fade-in-up 1s ease-out 0.5s both;
 }
 
 h2 {
     margin-bottom: 1.5rem;
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     line-height: 1.2;
     text-align: center;
 }
@@ -195,13 +249,17 @@ h3 {
     font-size: 1.1rem;
 }
 
+.hero p {
+    animation: fade-in-up 1s ease-out 0.7s both;
+}
+
 .button,
 .contact-link {
     min-height: 3.25rem;
     border-radius: 0.5rem;
     text-decoration: none;
     font-weight: 700;
-    transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, opacity 420ms ease;
+    transition: transform var(--transition-speed) var(--animation-easing), background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, opacity 420ms ease, box-shadow var(--transition-speed) ease;
 }
 
 .button:hover {
@@ -217,13 +275,21 @@ h3 {
 
 .button--primary {
     background: linear-gradient(var(--gold-angle), var(--accent), #f7df8a 42%, var(--accent-hover));
+    background-size: 200% auto;
     color: #0A0A0A;
-    animation: gold-shift 7s ease-in-out infinite alternate;
-    box-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--accent) 22%, transparent);
+    animation: fade-in-up 1s ease-out 0.9s both, gold-shift 7s ease-in-out infinite alternate, shimmer 3s linear infinite;
+    box-shadow:
+        0 0 20px color-mix(in srgb, var(--accent) 40%, transparent),
+        0 0 40px color-mix(in srgb, var(--accent) 20%, transparent),
+        0 0 60px color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .button--primary:hover {
     background: var(--accent-hover);
+    box-shadow:
+        0 0 30px color-mix(in srgb, var(--accent) 60%, transparent),
+        0 0 60px color-mix(in srgb, var(--accent) 40%, transparent),
+        0 0 90px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .button--secondary {
@@ -239,6 +305,7 @@ h3 {
 .section {
     padding: 4rem 2rem;
     background: var(--bg-primary);
+    transform-style: preserve-3d;
 }
 
 .section--accent {
@@ -248,6 +315,7 @@ h3 {
 .section__inner {
     width: min(100%, 70rem);
     margin: 0 auto;
+    transform: translateZ(0);
 }
 
 .guarantee-grid {
@@ -258,12 +326,12 @@ h3 {
 
 .guarantee-card {
     padding: 1.5rem;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 0.5rem;
-    background: var(--glass-bg);
-    box-shadow: 0 1rem 2.5rem var(--shadow);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-    backdrop-filter: blur(16px) saturate(140%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
 }
 
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
@@ -364,6 +432,10 @@ details p {
     font-size: 0.875rem;
 }
 
+.site-footer__contact {
+    font-style: normal;
+}
+
 .reveal {
     opacity: 0;
     transform: translateY(1.5rem);
@@ -411,6 +483,28 @@ details p {
     }
 }
 
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -430,6 +524,41 @@ details p {
     .reveal.is-visible,
     .contact-link {
         transform: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .section__inner {
+        padding: 0 1.5rem;
+    }
+
+    .guarantee-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero {
+        min-height: 70vh;
+    }
+}
+
+@media (max-width: 568px) and (orientation: landscape) {
+    .hero {
+        align-items: center;
+        min-height: 50vh;
+        padding: 2rem 1rem;
+    }
+
+    .hero__content {
+        text-align: center;
+    }
+}
+
+@media (min-width: 1920px) {
+    .section__inner {
+        max-width: 90rem;
     }
 }
 
