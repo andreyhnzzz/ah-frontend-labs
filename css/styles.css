@@ -19,6 +19,8 @@
     --space-xl: 4rem;
     --magnetic-x: 0px;
     --magnetic-y: 0px;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
 }
 
 body.modo-claro {
@@ -43,6 +45,11 @@ body.modo-claro {
     box-sizing: border-box;
 }
 
+::selection {
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
+    color: var(--text-primary);
+}
+
 html {
     font-size: clamp(14px, 2vw, 18px);
     scroll-behavior: smooth;
@@ -52,10 +59,20 @@ body {
     margin: 0;
     background: var(--bg-primary);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: "Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     font-size: 1rem;
     line-height: 1.6;
     transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+body.has-custom-cursor {
+    cursor: none;
+}
+
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor summary {
+    cursor: none;
 }
 
 main {
@@ -155,6 +172,7 @@ details:focus-within {
     gap: 0.75rem;
     text-decoration: none;
     font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
 .brand img {
@@ -175,6 +193,19 @@ details:focus-within {
     color: var(--accent);
     cursor: pointer;
     font-size: 1.35rem;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.theme-toggle:hover {
+    transform: rotate(20deg) scale(1.08);
+    box-shadow: 0 0 1rem color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.theme-toggle__icon {
+    display: inline-block;
+    transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms ease;
 }
 
 .hero {
@@ -184,8 +215,6 @@ details:focus-within {
     min-height: calc(100vh - 6.5rem);
     padding: 4rem 2rem;
     overflow: hidden;
-    perspective: 1px;
-    transform-style: preserve-3d;
 }
 
 .hero__image,
@@ -198,8 +227,9 @@ details:focus-within {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: translateZ(-1px) scale(2.02);
+    transform: scale(1.15);
     transform-origin: center;
+    will-change: transform;
 }
 
 .hero__overlay {
@@ -229,6 +259,7 @@ h1 {
     font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 1.15;
     animation: fade-in-up 1s ease-out 0.5s both;
+    font-family: "Cormorant Garamond", Georgia, serif;
 }
 
 h2 {
@@ -236,6 +267,7 @@ h2 {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     line-height: 1.2;
     text-align: center;
+    font-family: "Cormorant Garamond", Georgia, serif;
 }
 
 h3 {
@@ -271,6 +303,24 @@ h3 {
     align-items: center;
     justify-content: center;
     padding: 0.9rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+    transform: skewX(-20deg);
+    transition: left 500ms ease;
+}
+
+.button:hover::after {
+    left: 140%;
 }
 
 .button--primary {
@@ -310,6 +360,29 @@ h3 {
 
 .section--accent {
     background: var(--bg-secondary);
+    position: relative;
+    clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
+    margin: -3rem 0;
+    padding: 7rem 2rem;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.section-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+}
+
+.section--accent::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, color-mix(in srgb, var(--accent) 5%, transparent), transparent 72%);
+    pointer-events: none;
 }
 
 .section__inner {
@@ -325,6 +398,8 @@ h3 {
 }
 
 .guarantee-card {
+    position: relative;
+    overflow: hidden;
     padding: 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 0.5rem;
@@ -332,6 +407,35 @@ h3 {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     backdrop-filter: blur(20px) saturate(180%);
+    transform-style: preserve-3d;
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), border-color 250ms ease, box-shadow 300ms ease;
+    will-change: transform;
+}
+
+.guarantee-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        105deg,
+        transparent 20%,
+        color-mix(in srgb, var(--accent) 10%, transparent) 50%,
+        color-mix(in srgb, var(--accent) 8%, transparent) 60%,
+        transparent 80%
+    );
+    transform: translateX(-100%);
+    transition: transform 500ms ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.guarantee-card:hover::before {
+    transform: translateX(100%);
+}
+
+.guarantee-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+    box-shadow: 0 1.5rem 3rem var(--shadow), 0 0 2rem color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
@@ -343,7 +447,19 @@ h3 {
 .guarantee-card__icon {
     display: inline-block;
     margin-bottom: 1rem;
-    font-size: 2rem;
+    font-size: 2.5rem;
+    transition: transform 300ms ease;
+}
+
+.guarantee-card:hover .guarantee-card__icon {
+    transform: scale(1.15) translateY(-3px);
+}
+
+.guarantee-card__icon,
+.guarantee-card h3,
+.guarantee-card p {
+    position: relative;
+    z-index: 2;
 }
 
 .guarantee-card p {
@@ -361,7 +477,8 @@ h3 {
 .contact-links {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.875rem;
+    width: 100%;
 }
 
 .contact-link {
@@ -371,17 +488,29 @@ h3 {
     gap: 0.75rem;
     padding: 0.9rem 1rem;
     border: 1px solid var(--border);
+    border-radius: 0.625rem;
     background: transparent;
+    font-family: "Jost", sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0);
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), background-color 200ms ease, border-color 200ms ease, box-shadow 300ms ease;
 }
 
 .contact-link:hover {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
     transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0) translateY(-2px);
 }
 
 .contact-link--primary {
     border: 2px solid var(--accent);
     box-shadow: 0 0 1.5rem color-mix(in srgb, var(--accent) 28%, transparent);
+    animation: whatsapp-pulse 3s ease-in-out infinite;
+}
+
+.contact-link--primary:hover {
+    animation-play-state: paused;
 }
 
 .contact-link.is-magnetic {
@@ -393,6 +522,18 @@ h3 {
     height: 1.75rem;
 }
 
+.contact-link:nth-child(2) img {
+    filter: hue-rotate(300deg) saturate(1.5);
+}
+
+.contact-link:nth-child(3) img {
+    filter: invert(1);
+}
+
+body.modo-claro .contact-link:nth-child(3) img {
+    filter: none;
+}
+
 .faq {
     text-align: left;
 }
@@ -401,35 +542,134 @@ h3 {
     text-align: center;
 }
 
-details {
+.faq-entry {
+    margin: 0;
+}
+
+.faq-item {
     border-bottom: 1px solid var(--border);
-    background: var(--bg-primary);
+    background: transparent;
 }
 
-summary {
-    padding: 1rem 0;
-    color: var(--text-primary);
+.faq-item[open] {
+    border-bottom-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+.faq-item__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
     cursor: pointer;
-    font-weight: 700;
+    list-style: none;
+    color: var(--text-primary);
+    font-family: "Jost", sans-serif;
+    font-weight: 600;
+    transition: color 200ms ease;
 }
 
-details p {
-    margin-bottom: 0;
-    padding: 0 0 1rem;
+.faq-item__summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item[open] .faq-item__summary {
+    color: var(--accent);
+}
+
+.faq-item__chevron {
+    flex-shrink: 0;
+    color: var(--accent);
+    transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item[open] .faq-item__chevron {
+    transform: rotate(180deg);
+}
+
+.faq-item__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item[open] .faq-item__body {
+    grid-template-rows: 1fr;
+}
+
+.faq-item__body > p {
+    min-height: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0 0 1.25rem;
     color: var(--text-secondary);
+    font-size: 0.975rem;
+    line-height: 1.7;
 }
 
 .site-footer {
-    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 2rem;
     border-top: 1px solid var(--border);
     background: var(--bg-secondary);
     color: var(--text-secondary);
     text-align: center;
 }
 
-.site-footer p {
-    margin-bottom: 0;
-    font-size: 0.875rem;
+.site-footer::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 42%, transparent), transparent);
+}
+
+.site-footer__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.site-footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-primary);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: opacity 200ms ease;
+}
+
+.site-footer__brand:hover {
+    opacity: 0.75;
+}
+
+.site-footer__brand img {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.site-footer__tagline {
+    margin: 0;
+    color: var(--accent);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.05rem;
+    font-style: italic;
+}
+
+.site-footer__copy {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    opacity: 0.7;
 }
 
 .site-footer__contact {
@@ -505,6 +745,41 @@ details p {
     }
 }
 
+@keyframes whatsapp-pulse {
+    0%,
+    100% {
+        box-shadow: 0 0 1.5rem color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+
+    50% {
+        box-shadow: 0 0 2.5rem color-mix(in srgb, var(--accent) 45%, transparent), 0 0 5rem color-mix(in srgb, var(--accent) 18%, transparent);
+    }
+}
+
+@media (pointer: fine) {
+    body.has-custom-cursor .cursor-dot {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition: width 200ms ease, height 200ms ease, opacity 200ms ease, background-color 200ms ease;
+        will-change: transform;
+    }
+
+    body.has-custom-cursor .cursor-dot.cursor-hover {
+        width: 24px;
+        height: 24px;
+        border: 1px solid var(--accent);
+        background: color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -520,10 +795,27 @@ details p {
     }
 
     .hero__image,
+    .hero__content,
+    .hero p,
     .reveal,
     .reveal.is-visible,
-    .contact-link {
+    .contact-link,
+    .guarantee-card {
         transform: none;
+        opacity: 1;
+        animation: none;
+    }
+
+    .cursor-dot {
+        display: none;
+    }
+
+    body,
+    body.has-custom-cursor,
+    body.has-custom-cursor a,
+    body.has-custom-cursor button,
+    body.has-custom-cursor summary {
+        cursor: auto;
     }
 }
 
