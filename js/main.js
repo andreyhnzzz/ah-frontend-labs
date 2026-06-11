@@ -35,18 +35,26 @@ const UserPreferences = {
         const isLight = theme === this.THEMES.LIGHT;
         const themeButton = document.querySelector(".theme-toggle");
         const themeIcon = document.querySelector(".theme-toggle__icon");
-
-        if (!themeButton || !themeIcon) {
-            return;
-        }
+        const themeSwitch = document.getElementById("theme-switch");
 
         document.body.classList.toggle("modo-claro", isLight);
-        themeButton.setAttribute("aria-pressed", String(isLight));
-        themeButton.setAttribute("aria-label", isLight ? "Cambiar a modo oscuro" : "Cambiar a modo claro");
-        themeIcon.textContent = isLight ? "☀" : "☾";
+
+        if (themeSwitch) {
+            themeSwitch.checked = isLight;
+            themeSwitch.setAttribute("aria-label", isLight ? "Cambiar a modo oscuro" : "Cambiar a modo claro");
+        }
+
+        if (themeButton) {
+            themeButton.setAttribute("aria-pressed", String(isLight));
+            themeButton.setAttribute("aria-label", isLight ? "Cambiar a modo oscuro" : "Cambiar a modo claro");
+        }
+
+        if (themeIcon) {
+            themeIcon.textContent = isLight ? "sun" : "moon";
+        }
+
         sessionStorage.setItem("tema-sesion-actual", theme);
     },
-
     toggleTheme() {
         this.state.theme = this.state.theme === this.THEMES.DARK ? this.THEMES.LIGHT : this.THEMES.DARK;
         localStorage.setItem(this.KEYS.THEME, this.state.theme);
@@ -86,12 +94,21 @@ const UserPreferences = {
 
     setupEventListeners() {
         const themeButton = document.querySelector(".theme-toggle");
+        const themeSwitch = document.getElementById("theme-switch");
 
         if (themeButton) {
             themeButton.addEventListener("click", () => this.toggleTheme());
         }
-    },
 
+        if (themeSwitch) {
+            themeSwitch.addEventListener("change", () => {
+                this.state.theme = themeSwitch.checked ? this.THEMES.LIGHT : this.THEMES.DARK;
+                localStorage.setItem(this.KEYS.THEME, this.state.theme);
+                this.applyTheme(this.state.theme);
+                this.announce(`Tema cambiado a modo ${this.state.theme}.`);
+            });
+        }
+    },
     setupRevealAnimations() {
         const revealElements = document.querySelectorAll(".reveal");
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
