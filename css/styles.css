@@ -850,10 +850,13 @@ body.modo-claro .contact-icon--tiktok {
 .faq-item {
     border-bottom: 1px solid var(--border);
     background: transparent;
+    transition: background-color 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
 }
 
 .faq-item[open] {
     border-bottom-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .faq-item__summary {
@@ -892,11 +895,12 @@ body.modo-claro .contact-icon--tiktok {
     display: grid;
     grid-template-rows: 0fr;
     overflow: hidden;
-    transition: grid-template-rows 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: grid-template-rows 460ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .faq-item[open] .faq-item__body {
     grid-template-rows: 1fr;
+    animation: faq-body-in 360ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .faq-item__body > p {
@@ -907,6 +911,14 @@ body.modo-claro .contact-icon--tiktok {
     color: var(--text-secondary);
     font-size: 0.975rem;
     line-height: 1.7;
+    opacity: 0;
+    transform: translateY(-0.45rem);
+    transition: opacity 320ms ease 90ms, transform 360ms cubic-bezier(0.16, 1, 0.3, 1) 90ms;
+}
+
+.faq-item[open] .faq-item__body > p {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 #galeria {
@@ -920,7 +932,7 @@ body.modo-claro .contact-icon--tiktok {
 
 .wrapper {
     width: 100%;
-    height: 400px;
+    height: clamp(320px, 46vw, 500px);
     position: relative;
     text-align: center;
     display: flex;
@@ -930,11 +942,12 @@ body.modo-claro .contact-icon--tiktok {
 }
 
 .inner {
-    --w: 140px;
-    --h: 200px;
-    --translateZ: calc((var(--w) + var(--h)) / 2);
+    --w: clamp(92px, 12vw, 150px);
+    --h: calc(var(--w) * 1.45);
+    --gap: clamp(18px, 2.4vw, 34px);
+    --translateZ: clamp(210px, calc(((var(--w) + var(--gap)) * var(--quantity)) / 6.283), 520px);
     --rotateX: -10deg;
-    --perspective: 1000px;
+    --perspective: clamp(850px, 120vw, 1400px);
     position: absolute;
     width: var(--w);
     height: var(--h);
@@ -949,18 +962,22 @@ body.modo-claro .contact-icon--tiktok {
 .card {
     position: absolute;
     border: 2px solid rgba(var(--color-card), 0.3);
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
     inset: 0;
     transform: rotateY(calc((360deg / var(--quantity)) * var(--index))) translateZ(var(--translateZ));
     backface-visibility: visible;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    background: var(--bg-secondary);
+    aspect-ratio: 20 / 29;
+    padding: 0.35rem;
 }
 
 .img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     background: #0000 radial-gradient(
         circle,
         rgba(var(--color-card), 0.2) 0%,
@@ -1327,13 +1344,15 @@ body.modo-claro .wrapper {
     }
 
     .wrapper {
-        height: 300px;
+        height: 340px;
     }
 
     .inner {
-        --w: 100px;
-        --h: 150px;
-        --translateZ: calc((var(--w) + var(--h)) / 2);
+        --w: clamp(76px, 22vw, 100px);
+        --h: calc(var(--w) * 1.45);
+        --gap: 18px;
+        --translateZ: clamp(185px, calc(((var(--w) + var(--gap)) * var(--quantity)) / 6.283), 310px);
+        --perspective: 900px;
     }
 }
 
