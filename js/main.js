@@ -23,6 +23,8 @@ const UserPreferences = {
         this.setupEventListeners();
         this.setupRevealAnimations();
         this.setupMagneticButtons();
+        this.setupCarousel();
+        this.setupFAQAnimations();
     },
 
     loadTheme() {
@@ -166,6 +168,80 @@ const UserPreferences = {
                 button.style.setProperty("--magnetic-y", "0px");
             });
         });
+    },
+
+    setupCarousel() {
+        const carouselInner = document.getElementById("carousel-inner");
+
+        if (!carouselInner) {
+            return;
+        }
+
+        const images = [
+            "img/frag-webp/1663335194-bleu-de-chanel-eau-de-toilette-spray-3-4fl-oz--packshot-default-107460-8848377315358.webp",
+            "img/frag-webp/9857872822302.webp",
+            "img/frag-webp/FAKHARGOLDLattafa-Photoroom-2024-12-23T184729.671.webp",
+            "img/frag-webp/FAKHARGOLDLattafa-Photoroom_41.webp",
+            "img/frag-webp/LATASADB.webp",
+            "img/frag-webp/Perfumes-Hombre-Gentleman-Givenchy.webp",
+            "img/frag-webp/Valentino-Uomo-Born-In-Roma-Intense-Aromatica-CR-454052296.webp",
+            "img/frag-webp/nautica-voyage.webp",
+            "img/frag-webp/rasasi-hawas-tropical-edp-100ml-hombre-unisex-7160424.webp",
+            "img/frag-webp/rn-image_picker_lib_temp_2820dd9e-ca46-42fd-8486-6325e3a069f2.webp",
+            "img/frag-webp/yves-saint-laurent-y-edp-perfume-perfume-cologne-767661.webp"
+        ];
+
+        carouselInner.textContent = "";
+        carouselInner.style.setProperty("--quantity", images.length);
+
+        images.forEach((src, index) => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.style.setProperty("--index", index);
+
+            const img = document.createElement("img");
+            img.className = "img";
+            img.src = src;
+            img.alt = `Perfume ${index + 1} de la colección`;
+            img.loading = "lazy";
+
+            card.appendChild(img);
+            carouselInner.appendChild(card);
+        });
+    },
+
+    setupFAQAnimations() {
+        const faqEntries = document.querySelectorAll(".faq-entry");
+
+        if (faqEntries.length === 0) {
+            return;
+        }
+
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (prefersReducedMotion) {
+            faqEntries.forEach((entry) => entry.classList.add("is-visible"));
+            return;
+        }
+
+        if ("IntersectionObserver" in window) {
+            const faqObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -10% 0px"
+            });
+
+            faqEntries.forEach((entry) => faqObserver.observe(entry));
+            return;
+        }
+
+        faqEntries.forEach((entry) => entry.classList.add("is-visible"));
     },
 
     compareStorageTypes() {
