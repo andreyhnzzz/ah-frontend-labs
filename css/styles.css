@@ -779,20 +779,24 @@ h3 {
     height: 1.75rem;
 }
 
+.contact-link .icon-dark {
+    display: none;
+}
+
 .contact-link .icon-light {
-    display: none;
-}
-
-body.modo-claro .contact-link .icon-dark {
-    display: none;
-}
-
-body.modo-claro .contact-link .icon-light {
     display: block;
 }
 
-.contact-icon--instagram.icon-dark {
-    filter: hue-rotate(300deg) saturate(1.5);
+body.modo-claro .contact-link .icon-dark {
+    display: block;
+}
+
+body.modo-claro .contact-link .icon-light {
+    display: none;
+}
+
+body:not(.modo-claro) .contact-icon--instagram.icon-light {
+    filter: brightness(0) invert(1);
 }
 
 .contact-icon--tiktok {
@@ -813,6 +817,34 @@ body.modo-claro .contact-icon--tiktok {
 
 .faq-entry {
     margin: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.faq-entry.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.faq-entry:nth-child(1) {
+    transition-delay: 0ms;
+}
+
+.faq-entry:nth-child(2) {
+    transition-delay: 100ms;
+}
+
+.faq-entry:nth-child(3) {
+    transition-delay: 200ms;
+}
+
+.faq-entry:nth-child(4) {
+    transition-delay: 300ms;
+}
+
+.faq-entry:nth-child(5) {
+    transition-delay: 400ms;
 }
 
 .faq-item {
@@ -875,6 +907,79 @@ body.modo-claro .contact-icon--tiktok {
     color: var(--text-secondary);
     font-size: 0.975rem;
     line-height: 1.7;
+}
+
+#galeria {
+    overflow: hidden;
+    padding: 6rem 2rem;
+}
+
+#galeria h2 {
+    margin-bottom: 3rem;
+}
+
+.wrapper {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.inner {
+    --w: 140px;
+    --h: 200px;
+    --translateZ: calc((var(--w) + var(--h)) / 2);
+    --rotateX: -10deg;
+    --perspective: 1000px;
+    position: absolute;
+    width: var(--w);
+    height: var(--h);
+    top: 50%;
+    left: calc(50% - (var(--w) / 2));
+    z-index: 2;
+    transform-style: preserve-3d;
+    transform: perspective(var(--perspective));
+    animation: rotating 25s linear infinite;
+}
+
+.card {
+    position: absolute;
+    border: 2px solid rgba(var(--color-card), 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    inset: 0;
+    transform: rotateY(calc((360deg / var(--quantity)) * var(--index))) translateZ(var(--translateZ));
+    backface-visibility: visible;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #0000 radial-gradient(
+        circle,
+        rgba(var(--color-card), 0.2) 0%,
+        rgba(var(--color-card), 0.6) 80%,
+        rgba(var(--color-card), 0.9) 100%
+    );
+    transition: transform 0.3s ease;
+}
+
+.card:hover .img {
+    transform: scale(1.05);
+}
+
+body:not(.modo-claro) .wrapper {
+    --color-card: 212, 175, 55;
+}
+
+body.modo-claro .wrapper {
+    --color-card: 139, 105, 20;
 }
 
 .site-footer {
@@ -1039,6 +1144,16 @@ body.modo-claro .contact-icon--tiktok {
 
     to {
         translate: 0.12rem 0;
+    }
+}
+
+@keyframes rotating {
+    from {
+        transform: perspective(var(--perspective)) rotateX(var(--rotateX)) rotateY(0);
+    }
+
+    to {
+        transform: perspective(var(--perspective)) rotateX(var(--rotateX)) rotateY(1turn);
     }
 }
 
@@ -1209,6 +1324,16 @@ body.modo-claro .contact-icon--tiktok {
 
     .section {
         padding: 3rem 1rem;
+    }
+
+    .wrapper {
+        height: 300px;
+    }
+
+    .inner {
+        --w: 100px;
+        --h: 150px;
+        --translateZ: calc((var(--w) + var(--h)) / 2);
     }
 }
 
