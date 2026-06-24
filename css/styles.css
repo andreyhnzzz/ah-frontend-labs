@@ -181,10 +181,13 @@ ul, ol { list-style: none; }
 
 .hero__visual {
     position: relative;
-    height: 100dvh;
+    /* clamp limita el alto en ultra-wide para no recortar el frasco */
+    height: clamp(480px, 100dvh, 920px);
+    max-height: clamp(680px, 88vh, 920px);
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: stretch;
 }
 
 /* ambient glow behind the bottle — inspired by the corner radial reference */
@@ -206,7 +209,15 @@ ul, ol { list-style: none; }
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center center;
+}
+
+/* en ultra-wide el banner se ve completo sin recorte vertical */
+@media (min-width: 1800px) {
+    .hero__visual img {
+        object-fit: contain;
+        object-position: center center;
+    }
 }
 
 @keyframes glow-breathe {
@@ -270,9 +281,17 @@ ul, ol { list-style: none; }
     scrollbar-width: none;
     padding: 0.5rem clamp(1.5rem, 5vw, 5rem) 3rem;
     cursor: grab;
+    /* reserva espacio estructural antes de que JS inyecte los items — evita CLS */
+    min-height: calc(clamp(180px, 24vw, 260px) * (4 / 3) + 3.5rem);
 }
 .gallery-track:active { cursor: grabbing; }
 .gallery-track::-webkit-scrollbar { display: none; }
+
+/* skeleton mientras la imagen no ha cargado */
+@keyframes skeleton-sweep {
+    from { background-position: -200% 0; }
+    to   { background-position:  200% 0; }
+}
 
 .gallery-item {
     scroll-snap-align: start;
@@ -281,14 +300,29 @@ ul, ol { list-style: none; }
     border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid var(--border);
-    background: var(--surface);
+    /* skeleton CSS puro: visible hasta que la imagen cargue */
+    background:
+        linear-gradient(
+            90deg,
+            var(--surface) 0%,
+            #1e1c19 50%,
+            var(--surface) 100%
+        );
+    background-size: 200% 100%;
+    animation: skeleton-sweep 1.6s ease-in-out infinite;
     position: relative;
 }
 
+/* la imagen cubre el skeleton sin alterar el flujo del contenedor */
 .gallery-item img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+}
+
+.gallery-item img {
     transition: transform 0.45s ease, filter 0.45s ease;
     will-change: transform;
 }
@@ -314,9 +348,11 @@ ul, ol { list-style: none; }
     /* dark gradient from reference, adapted to warm perfumery tones */
     background: linear-gradient(135deg, #1a1916 0%, #0d0c0b 65%);
     padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.5rem, 2.5vw, 2rem);
-    transition: background 0.3s ease, transform 0.25s ease;
+    transition: background 0.3s ease;
     position: relative;
     overflow: hidden;
+    /* sin border-radius propio: el padre (overflow:hidden + border-radius) lo contiene */
+    border-radius: 0;
 }
 
 .bento-card::after {
@@ -744,6 +780,7 @@ body.a11y-reduce-motion *::after {
         order: -1;
         margin-top: var(--header-h);
     }
+    /* 2 columnas: el padre mantiene overflow:hidden; las tarjetas no necesitan radio */
     .bento-grid { grid-template-columns: repeat(2, 1fr); }
 }
 

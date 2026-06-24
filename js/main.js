@@ -59,25 +59,62 @@ function setupGallery() {
         img.loading = "lazy";
         img.width = 260;
         img.height = 347;
+        /* stop drag from picking up the image as a ghost */
+        img.draggable = false;
 
         item.appendChild(img);
         track.appendChild(item);
     });
 
-    /* drag-to-scroll for desktop */
-    let isDown = false, startX = 0, scrollLeft = 0;
-    track.addEventListener("mousedown", e => {
-        isDown = true;
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-    });
-    track.addEventListener("mouseleave", () => { isDown = false; });
-    track.addEventListener("mouseup",    () => { isDown = false; });
-    track.addEventListener("mousemove",  e => {
-        if (!isDown) return;
-        e.preventDefault();
-        track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX);
-    });
+    /* ── drag-to-scroll con pointer events ── */
+    let dragging   = false;
+    let startX     = 0;
+    let originLeft = 0;
+    let moved      = false;          /* distingue click de arrastre */
+    const SNAP_PROP = "scroll-snap-type";
+
+    function dragStart(e) {
+        /* solo boton primario del mouse; ignorar touch (touch usa scroll nativo) */
+        if (e.pointerType === "touch") return;
+        dragging   = true;
+        moved      = false;
+        startX     = e.clientX;
+        originLeft = track.scrollLeft;
+
+        track.setPointerCapture(e.pointerId);
+        track.style.cursor = "grabbing";
+        /* desactiva snap durante el arrastre para scroll fluido */
+        track.style.scrollSnapType = "none";
+        /* previene seleccion de texto e imagenes */
+        track.style.userSelect = "none";
+    }
+
+    function dragMove(e) {
+        if (!dragging) return;
+        const delta = startX - e.clientX;
+        if (Math.abs(delta) > 4) moved = true;
+        track.scrollLeft = originLeft + delta;
+    }
+
+    function dragEnd(e) {
+        if (!dragging) return;
+        dragging = false;
+        track.style.cursor = "";
+        track.style.userSelect = "";
+
+        /* reactiva snap: el navegador hace el snap magnetico al valor mas cercano */
+        track.style.scrollSnapType = "";
+
+        /* si no hubo movimiento real, deja propagar el click normalmente */
+        if (!moved) return;
+        /* absorbe el click para que no dispare links dentro de las tarjetas */
+        track.addEventListener("click", e => e.stopPropagation(), { once: true, capture: true });
+    }
+
+    track.addEventListener("pointerdown",  dragStart);
+    track.addEventListener("pointermove",  dragMove);
+    track.addEventListener("pointerup",    dragEnd);
+    track.addEventListener("pointerleave", dragEnd);
 }
 
 const A11y = {
