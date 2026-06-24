@@ -136,7 +136,7 @@
             <div class="section__inner wholesale">
                 <h2 id="mayoreo-title">Descuentos Exclusivos al Mayoreo</h2>
                 <p>A partir de 5 piezas obtienes descuento especial. Mantén tu descuento comprando 1 frasco al mes.</p>
-                <a class="button button--secondary btn-mayoreo" href="https://wa.me/50664801512?text=Hola%2C%20quiero%20consultar%20precios%20al%20mayoreo" target="_blank" rel="noopener noreferrer" aria-label="Consultar precios al mayoreo por WhatsApp">
+                <a class="button button--secondary btn-mayoreo" href="https://wa.me/50664801512?text=Hola%2C%20encontr%C3%A9%20su%20p%C3%A1gina%20web%20y%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20los%20precios%20al%20mayoreo.%20Entiendo%20que%20aplica%20descuento%20especial%20a%20partir%20de%205%20piezas.%20%C2%BFPodr%C3%ADa%20indicarme%20las%20opciones%20disponibles%3F%20Gracias." target="_blank" rel="noopener noreferrer" aria-label="Consultar precios al mayoreo por WhatsApp (abre WhatsApp)">
                     <span class="btn-mayoreo__text">Consultar precios al mayoreo</span>
                     <span class="btn-mayoreo__icons" aria-hidden="true">
                         <svg viewBox="0 0 24 24" role="img" focusable="false">
@@ -157,7 +157,7 @@
             <div class="section__inner contact-hub">
                 <h2 id="contacto-title">Conecta con Nosotros</h2>
                 <div class="contact-links" aria-label="Canales de contacto">
-                    <a class="contact-link contact-link--primary reveal" href="https://wa.me/50664801512" target="_blank" rel="noopener noreferrer">
+                    <a class="contact-link contact-link--primary reveal" href="https://wa.me/50664801512?text=Hola%2C%20le%20contacto%20desde%20enigmaessence.cr.%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20los%20perfumes%20disponibles%20y%20sus%20precios.%20%C2%BFPodr%C3%ADa%20orientarme%3F%20Gracias." target="_blank" rel="noopener noreferrer" aria-label="Chatear con el fundador por WhatsApp (abre WhatsApp)">
                         <img class="icon-dark contact-icon contact-icon--whatsapp" src="img/icons/whatsapp.svg" alt="" aria-hidden="true" width="28" height="28">
                         <img class="icon-light contact-icon contact-icon--whatsapp" src="img/icons/whatsapp-white-icon.svg" alt="" aria-hidden="true" width="28" height="28">
                         <span>Chatear con el fundador</span>
@@ -254,5 +254,101 @@
         </div>
     </footer>
     <div class="cursor-dot" aria-hidden="true"></div>
+
+    <div class="a11y-widget" id="a11y-widget">
+        <button
+            class="a11y-widget__toggle"
+            id="a11y-toggle"
+            aria-expanded="false"
+            aria-controls="a11y-panel"
+            aria-label="Abrir opciones de accesibilidad"
+            title="Accesibilidad"
+        >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="4" r="2.2"/>
+                <path d="M5.5 8.5h13M10 12v5.5l-2 4M14 12v5.5l2 4M9.5 12h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+        </button>
+
+        <div
+            class="a11y-widget__panel"
+            id="a11y-panel"
+            role="dialog"
+            aria-labelledby="a11y-panel-title"
+            aria-modal="true"
+            hidden
+        >
+            <div class="a11y-widget__header">
+                <h2 class="a11y-widget__title" id="a11y-panel-title">Accesibilidad</h2>
+                <button class="a11y-widget__close" id="a11y-close" aria-label="Cerrar panel de accesibilidad">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="a11y-widget__body">
+                <div class="a11y-section" role="group" aria-labelledby="a11y-text-label">
+                    <span class="a11y-section__label" id="a11y-text-label">Tamaño de texto</span>
+                    <div class="a11y-controls">
+                        <button class="a11y-btn" id="a11y-text-decrease" aria-label="Reducir tamaño de texto">A−</button>
+                        <button class="a11y-btn" id="a11y-text-reset-size" aria-label="Restablecer tamaño de texto">A</button>
+                        <button class="a11y-btn" id="a11y-text-increase" aria-label="Aumentar tamaño de texto">A+</button>
+                    </div>
+                </div>
+
+                <button class="a11y-option" id="a11y-high-contrast" aria-pressed="false">
+                    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" fill="none">
+                        <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.4"/>
+                        <path d="M10 1.5 A8.5 8.5 0 0 1 10 18.5 Z" fill="currentColor"/>
+                        <line x1="10" y1="1.5" x2="10" y2="18.5" stroke="currentColor" stroke-width="1.4"/>
+                    </svg>
+                    <span>Alto contraste</span>
+                    <span class="a11y-option__check" aria-hidden="true"></span>
+                </button>
+
+                <button class="a11y-option" id="a11y-reduce-motion" aria-pressed="false">
+                    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" fill="none">
+                        <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.4"/>
+                        <path d="M7 7L13 13M13 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <span>Reducir movimiento</span>
+                    <span class="a11y-option__check" aria-hidden="true"></span>
+                </button>
+
+                <button class="a11y-option" id="a11y-focus-enhance" aria-pressed="false">
+                    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" fill="none">
+                        <rect x="2.5" y="2.5" width="15" height="15" rx="2" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 2"/>
+                        <rect x="6" y="6" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/>
+                    </svg>
+                    <span>Resaltar foco</span>
+                    <span class="a11y-option__check" aria-hidden="true"></span>
+                </button>
+
+                <button class="a11y-option" id="a11y-dyslexic" aria-pressed="false">
+                    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" fill="none">
+                        <path d="M3 15 L6 5 L10 13 L14 5 L17 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="3" y1="17" x2="17" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <span>Fuente legible</span>
+                    <span class="a11y-option__check" aria-hidden="true"></span>
+                </button>
+
+                <button class="a11y-option" id="a11y-underline-links" aria-pressed="false">
+                    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" fill="none">
+                        <path d="M6 4v7a4 4 0 0 0 8 0V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="3" y1="17" x2="17" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <span>Subrayar enlaces</span>
+                    <span class="a11y-option__check" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="a11y-widget__footer">
+                <button class="a11y-btn a11y-btn--reset" id="a11y-reset">Restablecer todo</button>
+                <p class="a11y-widget__legal">Ley N° 7600 · CFIA · WCAG 2.1 AA</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
