@@ -35,34 +35,183 @@ function setupGallery() {
     const track = document.getElementById("gallery-track");
     if (!track) return;
 
-    const images = [
-        { src: "img/frag-webp/1663335194-bleu-de-chanel-eau-de-toilette-spray-3-4fl-oz--packshot-default-107460-8848377315358.webp", alt: "Bleu de Chanel Eau de Toilette" },
-        { src: "img/frag-webp/9857872822302.webp",                                                                                  alt: "Fragancia premium de la coleccion" },
-        { src: "img/frag-webp/FAKHARGOLDLattafa-Photoroom-2024-12-23T184729.671.webp",                                              alt: "Fakhar Gold de Lattafa" },
-        { src: "img/frag-webp/FAKHARGOLDLattafa-Photoroom_41.webp",                                                                alt: "Fakhar Gold Lattafa variante" },
-        { src: "img/frag-webp/LATASADB.webp",                                                                                       alt: "Lattafa coleccion arabiga" },
-        { src: "img/frag-webp/Perfumes-Hombre-Gentleman-Givenchy.webp",                                                             alt: "Gentleman de Givenchy" },
-        { src: "img/frag-webp/Valentino-Uomo-Born-In-Roma-Intense-Aromatica-CR-454052296.webp",                                     alt: "Valentino Uomo Born In Roma Intense" },
-        { src: "img/frag-webp/nautica-voyage.webp",                                                                                 alt: "Nautica Voyage" },
-        { src: "img/frag-webp/rasasi-hawas-tropical-edp-100ml-hombre-unisex-7160424.webp",                                          alt: "Rasasi Hawas Tropical EDP" },
-        { src: "img/frag-webp/rn-image_picker_lib_temp_2820dd9e-ca46-42fd-8486-6325e3a069f2.webp",                                  alt: "Fragancia exclusiva de la coleccion" },
-        { src: "img/frag-webp/yves-saint-laurent-y-edp-perfume-perfume-cologne-767661.webp",                                        alt: "YSL Y Eau de Parfum" },
+    const brands = [
+        {
+            name: "Chanel",
+            svg: `<svg viewBox="0 0 200 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <defs><clipPath id="ch-lo"><rect x="0" y="65" width="200" height="80"/></clipPath></defs>
+  <path d="M112.9,77 A35,35 0 1 1 112.9,53 L100.7,57.5 A22,22 0 1 0 100.7,72.5 Z"/>
+  <path d="M87.1,53 A35,35 0 1 1 87.1,77 L99.3,72.5 A22,22 0 1 0 99.3,57.5 Z"/>
+  <path d="M112.9,77 A35,35 0 1 1 112.9,53 L100.7,57.5 A22,22 0 1 0 100.7,72.5 Z" clip-path="url(#ch-lo)"/>
+  <text x="100" y="124" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="13" letter-spacing="8">CHANEL</text>
+</svg>`
+        },
+        {
+            name: "YSL",
+            svg: `<svg viewBox="0 0 200 165" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <rect x="55" y="8" width="90" height="144" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="100" y="62" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="700">Y</text>
+  <text x="100" y="104" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="700">S</text>
+  <text x="100" y="146" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="700">L</text>
+</svg>`
+        },
+        {
+            name: "Dior",
+            svg: `<svg viewBox="0 0 200 90" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <text x="100" y="56" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="40" letter-spacing="6" font-weight="300" font-style="italic">Dior</text>
+  <line x1="48" y1="65" x2="152" y2="65" stroke="currentColor" stroke-width="0.4" opacity="0.3"/>
+  <text x="100" y="79" text-anchor="middle" font-family="Jost,sans-serif" font-size="7" letter-spacing="3.5" opacity="0.35" font-weight="300">CHRISTIAN DIOR · PARIS</text>
+</svg>`
+        },
+        {
+            name: "Prada",
+            svg: `<svg viewBox="0 0 200 118" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M100,7 L166,42 L166,76 L100,111 L34,76 L34,42 Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <path d="M100,14 L158,46 L158,72 L100,104 L42,72 L42,46 Z" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.28"/>
+  <text x="100" y="61" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="20" letter-spacing="5">PRADA</text>
+  <text x="100" y="76" text-anchor="middle" font-family="Jost,sans-serif" font-size="6.5" letter-spacing="3.5" opacity="0.4" font-weight="300">MILANO</text>
+</svg>`
+        },
+        {
+            name: "Versace",
+            svg: `<svg viewBox="0 0 200 138" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <line x1="22" y1="17" x2="178" y2="17" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="22" y1="20" x2="178" y2="20" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+  <path d="M22,17 L22,32 M22,17 L38,17 M38,17 L38,28 L28,28 L28,17" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+  <path d="M178,17 L178,32 M178,17 L162,17 M162,17 L162,28 L172,28 L172,17" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+  <text x="100" y="92" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="64" font-weight="500">V</text>
+  <line x1="22" y1="102" x2="178" y2="102" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="22" y1="105" x2="178" y2="105" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+  <text x="100" y="125" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="13.5" letter-spacing="7">VERSACE</text>
+</svg>`
+        },
+        {
+            name: "Givenchy",
+            svg: `<svg viewBox="0 0 200 88" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <line x1="20" y1="22" x2="180" y2="22" stroke="currentColor" stroke-width="1.1"/>
+  <line x1="20" y1="25" x2="180" y2="25" stroke="currentColor" stroke-width="0.3" opacity="0.4"/>
+  <text x="100" y="54" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="22" letter-spacing="7" font-weight="300">GIVENCHY</text>
+  <line x1="20" y1="61" x2="180" y2="61" stroke="currentColor" stroke-width="1.1"/>
+  <line x1="20" y1="64" x2="180" y2="64" stroke="currentColor" stroke-width="0.3" opacity="0.4"/>
+  <text x="100" y="78" text-anchor="middle" font-family="Jost,sans-serif" font-size="7" letter-spacing="4" opacity="0.35" font-weight="300">PARIS</text>
+</svg>`
+        },
+        {
+            name: "Valentino",
+            svg: `<svg viewBox="0 0 200 118" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M40,14 L100,98 L160,14 L144,14 L100,80 L56,14 Z"/>
+  <text x="100" y="112" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="12" letter-spacing="7">VALENTINO</text>
+</svg>`
+        },
+        {
+            name: "Giorgio Armani",
+            svg: `<svg viewBox="0 0 220 125" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M106,50 C90,44 72,36 50,30 C62,38 65,46 62,55 C51,50 38,50 28,57 C42,53 58,56 72,60 L103,64 Z"/>
+  <path d="M114,50 C130,44 148,36 170,30 C158,38 155,46 158,55 C169,50 182,50 192,57 C178,53 162,56 148,60 L117,64 Z"/>
+  <ellipse cx="110" cy="55" rx="9" ry="18"/>
+  <circle cx="114" cy="35" r="8"/>
+  <path d="M122,33 L130,35 L122,37 Z"/>
+  <circle cx="116" cy="33" r="1.8" fill="#0d0c0b"/>
+  <path d="M105,73 L102,83 L110,78 L118,83 L115,73 Z"/>
+  <text x="110" y="103" text-anchor="middle" font-family="Jost,sans-serif" font-size="7.5" letter-spacing="5.5" font-weight="300">GIORGIO ARMANI</text>
+  <line x1="18" y1="108" x2="202" y2="108" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
+</svg>`
+        },
+        {
+            name: "Jean Paul Gaultier",
+            svg: `<svg viewBox="0 0 200 138" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <rect x="12" y="9" width="176" height="120" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <rect x="18" y="15" width="164" height="108" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+  <path d="M12,30 L28,30 M28,9 L28,30" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path d="M188,30 L172,30 M172,9 L172,30" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path d="M12,108 L28,108 M28,129 L28,108" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path d="M188,108 L172,108 M172,129 L172,108" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <text x="100" y="79" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="40" letter-spacing="5" font-weight="300">JPG</text>
+  <text x="100" y="103" text-anchor="middle" font-family="Jost,sans-serif" font-size="6.5" letter-spacing="2" opacity="0.45" font-weight="300">JEAN PAUL GAULTIER</text>
+</svg>`
+        },
+        {
+            name: "Carolina Herrera",
+            svg: `<svg viewBox="0 0 200 118" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <text x="66" y="85" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="74" font-weight="300" font-style="italic">C</text>
+  <text x="136" y="85" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="74" font-weight="300" font-style="italic">H</text>
+  <text x="100" y="110" text-anchor="middle" font-family="Jost,sans-serif" font-size="6.5" letter-spacing="2.5" opacity="0.4" font-weight="300">CAROLINA HERRERA</text>
+</svg>`
+        },
+        {
+            name: "Dolce &amp; Gabbana",
+            svg: `<svg viewBox="0 0 200 118" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <text x="50" y="84" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="62" font-weight="400" font-style="italic">D</text>
+  <text x="102" y="76" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="36" font-weight="300">&amp;</text>
+  <text x="152" y="84" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="62" font-weight="400" font-style="italic">G</text>
+  <text x="100" y="108" text-anchor="middle" font-family="Jost,sans-serif" font-size="6.5" letter-spacing="2.5" opacity="0.4" font-weight="300">DOLCE &amp; GABBANA</text>
+</svg>`
+        },
+        {
+            name: "Paco Rabanne",
+            svg: `<svg viewBox="0 0 200 98" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M100,8 L106,18 L100,28 L94,18 Z" opacity="0.5"/>
+  <text x="100" y="54" text-anchor="middle" font-family="Jost,sans-serif" font-size="13" letter-spacing="7" font-weight="300">PACO</text>
+  <line x1="48" y1="60" x2="152" y2="60" stroke="currentColor" stroke-width="0.4" opacity="0.25"/>
+  <text x="100" y="77" text-anchor="middle" font-family="Jost,sans-serif" font-size="13" letter-spacing="5.5" font-weight="300">RABANNE</text>
+  <text x="100" y="92" text-anchor="middle" font-family="Jost,sans-serif" font-size="6.5" letter-spacing="3.5" opacity="0.35" font-weight="300">PARIS</text>
+</svg>`
+        },
+        {
+            name: "Lattafa",
+            svg: `<svg viewBox="0 0 200 88" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <line x1="22" y1="20" x2="84" y2="20" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
+  <line x1="116" y1="20" x2="178" y2="20" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
+  <path d="M100,14 L104,20 L100,26 L96,20 Z"/>
+  <text x="100" y="52" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="22" letter-spacing="6" font-weight="300">LATTAFA</text>
+  <line x1="62" y1="60" x2="138" y2="60" stroke="currentColor" stroke-width="0.35" opacity="0.25"/>
+  <text x="100" y="74" text-anchor="middle" font-family="Jost,sans-serif" font-size="7" letter-spacing="3.5" opacity="0.35" font-weight="300">PERFUMES · DUBAI</text>
+</svg>`
+        },
+        {
+            name: "French Avenue",
+            svg: `<svg viewBox="0 0 200 98" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <line x1="20" y1="17" x2="84" y2="17" stroke="currentColor" stroke-width="1.2"/>
+  <line x1="20" y1="20" x2="84" y2="20" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+  <path d="M100,13 L105,18 L100,23 L95,18 Z"/>
+  <line x1="116" y1="17" x2="180" y2="17" stroke="currentColor" stroke-width="1.2"/>
+  <line x1="116" y1="20" x2="180" y2="20" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+  <text x="100" y="46" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="15" letter-spacing="5">FRENCH</text>
+  <text x="100" y="64" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="15" letter-spacing="5">AVENUE</text>
+  <line x1="20" y1="76" x2="84" y2="76" stroke="currentColor" stroke-width="1.2"/>
+  <line x1="20" y1="79" x2="84" y2="79" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+  <path d="M100,72 L105,77 L100,82 L95,77 Z"/>
+  <line x1="116" y1="76" x2="180" y2="76" stroke="currentColor" stroke-width="1.2"/>
+  <line x1="116" y1="79" x2="180" y2="79" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+</svg>`
+        },
+        {
+            name: "Afnan",
+            svg: `<svg viewBox="0 0 200 88" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <text x="100" y="52" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="32" letter-spacing="9" font-weight="300">AFNAN</text>
+  <line x1="38" y1="60" x2="86" y2="60" stroke="currentColor" stroke-width="0.4" opacity="0.25"/>
+  <path d="M96,57 L100,61 L104,57 L100,64 Z" opacity="0.4"/>
+  <line x1="114" y1="60" x2="162" y2="60" stroke="currentColor" stroke-width="0.4" opacity="0.25"/>
+  <text x="100" y="76" text-anchor="middle" font-family="Jost,sans-serif" font-size="7" letter-spacing="4" opacity="0.35" font-weight="300">PERFUMES</text>
+</svg>`
+        },
+        {
+            name: "Armaf",
+            svg: `<svg viewBox="0 0 200 112" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M100,8 L122,17 L122,46 Q122,66 100,76 Q78,66 78,46 L78,17 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M100,15 L117,23 L117,45 Q117,62 100,70 Q83,62 83,45 L83,23 Z" fill="none" stroke="currentColor" stroke-width="0.4" opacity="0.28"/>
+  <text x="100" y="54" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="24" font-weight="500">A</text>
+  <text x="100" y="93" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="18" letter-spacing="6">ARMAF</text>
+  <text x="100" y="106" text-anchor="middle" font-family="Jost,sans-serif" font-size="6.5" letter-spacing="3" opacity="0.35" font-weight="300">DUBAI · UAE</text>
+</svg>`
+        },
     ];
 
-    images.forEach(({ src, alt }) => {
-        const item = document.createElement("div");
-        item.className = "gallery-item";
-
-        const img = document.createElement("img");
-        img.src = src;
-        img.alt = alt;
-        img.loading = "lazy";
-        img.width = 260;
-        img.height = 347;
-        /* stop drag from picking up the image as a ghost */
-        img.draggable = false;
-
-        item.appendChild(img);
+    brands.forEach(({ name, svg }) => {
+        const item = document.createElement("article");
+        item.className = "gallery-item gallery-item--brand";
+        item.setAttribute("role", "listitem");
+        item.innerHTML = `<div class="brand-logo" aria-hidden="true">${svg}</div><span class="brand-name">${name}</span>`;
         track.appendChild(item);
     });
 
