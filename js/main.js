@@ -288,7 +288,7 @@ const AccessibilityWidget = {
     },
 
     loadPreferences() {
-        const saved = (key, fallback) => localStorage.getItem(key);
+        const saved = (key) => localStorage.getItem(key);
         this.state.textScale     = parseFloat(saved(this.KEYS.TEXT_SCALE)) || 1;
         this.state.highContrast  = saved(this.KEYS.HIGH_CONTRAST)   === "true";
         this.state.reduceMotion  = saved(this.KEYS.REDUCE_MOTION)   === "true";

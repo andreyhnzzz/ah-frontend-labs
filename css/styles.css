@@ -90,6 +90,7 @@ summary,
     -webkit-touch-callout: none;
 }
 
+/* perspective:1px + preserve-3d en main activa el parallax de secciones */
 main {
     overflow-x: clip;
     perspective: 1px;
@@ -922,9 +923,9 @@ body.modo-claro .contact-icon--tiktok {
     transform: translateY(0);
 }
 
+/* overflow:hidden crea un bfc que aisla el carrusel del perspective:1px de main */
 #galeria {
-    isolation: isolate;
-    overflow: clip;
+    overflow: hidden;
     padding: 6rem 2rem;
 }
 
@@ -932,16 +933,15 @@ body.modo-claro .contact-icon--tiktok {
     margin-bottom: 3rem;
 }
 
+/* overflow:clip recorta sin crear bfc */
 .wrapper {
     width: 100%;
     height: clamp(320px, 46vw, 500px);
     position: relative;
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: clip;
-    contain: layout;
 }
 
 .inner {
@@ -960,6 +960,7 @@ body.modo-claro .contact-icon--tiktok {
     transform-style: preserve-3d;
     transform: perspective(var(--perspective));
     animation: rotating 25s linear infinite;
+    will-change: transform;
 }
 
 .card {
