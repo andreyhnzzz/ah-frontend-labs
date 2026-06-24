@@ -257,6 +257,64 @@ const A11y = {
     },
 };
 
+function setupFAQ() {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    document.querySelectorAll(".faq-item").forEach(details => {
+        const summary = details.querySelector("summary");
+        const body    = details.querySelector(".faq-item__body");
+        if (!summary || !body) return;
+
+        summary.addEventListener("click", e => {
+            e.preventDefault();
+
+            if (reduced) {
+                details.open = !details.open;
+                return;
+            }
+
+            if (details.open) {
+                /* cierre: scrollHeight -> 0 */
+                body.style.height   = body.scrollHeight + "px";
+                body.style.opacity  = "1";
+                body.style.overflow = "hidden";
+
+                requestAnimationFrame(() => {
+                    body.style.transition = "height 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease";
+                    body.style.height     = "0";
+                    body.style.opacity    = "0";
+                });
+
+                body.addEventListener("transitionend", function handler(ev) {
+                    if (ev.propertyName !== "height") return;
+                    details.open       = false;
+                    body.style.cssText = "";
+                    body.removeEventListener("transitionend", handler);
+                });
+            } else {
+                /* apertura: 0 -> scrollHeight */
+                details.open       = true;
+                const h            = body.scrollHeight;
+                body.style.cssText = "height:0;opacity:0;overflow:hidden";
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        body.style.transition = "height 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease";
+                        body.style.height     = h + "px";
+                        body.style.opacity    = "1";
+                    });
+                });
+
+                body.addEventListener("transitionend", function handler(ev) {
+                    if (ev.propertyName !== "height") return;
+                    body.style.cssText = "";
+                    body.removeEventListener("transitionend", handler);
+                });
+            }
+        });
+    });
+}
+
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
 } else {
@@ -266,5 +324,6 @@ if (document.readyState === "loading") {
 function init() {
     setupReveal();
     setupGallery();
+    setupFAQ();
     A11y.init();
 }
