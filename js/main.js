@@ -25,6 +25,7 @@ const UserPreferences = {
         this.setupMagneticButtons();
         this.setupCarousel();
         this.setupFAQAnimations();
+        AccessibilityWidget.init();
     },
 
     loadTheme() {
@@ -204,6 +205,8 @@ const UserPreferences = {
             img.src = src;
             img.alt = `Perfume ${index + 1} de la colección`;
             img.loading = "lazy";
+            img.width = 300;
+            img.height = 435;
 
             card.appendChild(img);
             carouselInner.appendChild(card);
@@ -256,6 +259,170 @@ const UserPreferences = {
         });
         console.groupEnd();
     }
+};
+
+const AccessibilityWidget = {
+    KEYS: {
+        HIGH_CONTRAST:    "a11y-high-contrast",
+        REDUCE_MOTION:    "a11y-reduce-motion",
+        FOCUS_ENHANCE:    "a11y-focus-enhance",
+        DYSLEXIC:         "a11y-dyslexic",
+        UNDERLINE_LINKS:  "a11y-underline-links",
+        TEXT_SCALE:       "a11y-text-scale",
+    },
+
+    state: {
+        isOpen:        false,
+        textScale:     1,
+        highContrast:  false,
+        reduceMotion:  false,
+        focusEnhance:  false,
+        dyslexic:      false,
+        underlineLinks: false,
+    },
+
+    init() {
+        this.loadPreferences();
+        this.applyAll();
+        this.setupPanel();
+    },
+
+    loadPreferences() {
+        const saved = (key, fallback) => localStorage.getItem(key);
+        this.state.textScale     = parseFloat(saved(this.KEYS.TEXT_SCALE)) || 1;
+        this.state.highContrast  = saved(this.KEYS.HIGH_CONTRAST)   === "true";
+        this.state.reduceMotion  = saved(this.KEYS.REDUCE_MOTION)   === "true";
+        this.state.focusEnhance  = saved(this.KEYS.FOCUS_ENHANCE)   === "true";
+        this.state.dyslexic      = saved(this.KEYS.DYSLEXIC)        === "true";
+        this.state.underlineLinks = saved(this.KEYS.UNDERLINE_LINKS) === "true";
+    },
+
+    applyAll() {
+        const s = this.state;
+        document.documentElement.style.setProperty("--a11y-text-scale", s.textScale);
+        document.body.classList.toggle("a11y-high-contrast",  s.highContrast);
+        document.body.classList.toggle("a11y-reduce-motion",  s.reduceMotion);
+        document.body.classList.toggle("a11y-focus-enhance",  s.focusEnhance);
+        document.body.classList.toggle("a11y-dyslexic",       s.dyslexic);
+        document.body.classList.toggle("a11y-underline-links", s.underlineLinks);
+        this.syncButtonStates();
+    },
+
+    setupPanel() {
+        const toggle = document.getElementById("a11y-toggle");
+        const close  = document.getElementById("a11y-close");
+
+        if (!toggle) return;
+
+        toggle.addEventListener("click", () => this.togglePanel());
+        close?.addEventListener("click",  () => this.closePanel());
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && this.state.isOpen) this.closePanel();
+        });
+
+        document.addEventListener("click", (e) => {
+            const widget = document.getElementById("a11y-widget");
+            if (this.state.isOpen && widget && !widget.contains(e.target)) {
+                this.closePanel();
+            }
+        });
+
+        document.getElementById("a11y-text-increase")?.addEventListener("click", () => this.adjustScale(0.1));
+        document.getElementById("a11y-text-decrease")?.addEventListener("click", () => this.adjustScale(-0.1));
+        document.getElementById("a11y-text-reset-size")?.addEventListener("click", () => this.setScale(1));
+
+        const toggles = [
+            { id: "a11y-high-contrast",   key: "highContrast",   storageKey: this.KEYS.HIGH_CONTRAST,    label: "Alto contraste"     },
+            { id: "a11y-reduce-motion",   key: "reduceMotion",   storageKey: this.KEYS.REDUCE_MOTION,    label: "Reducir movimiento" },
+            { id: "a11y-focus-enhance",   key: "focusEnhance",   storageKey: this.KEYS.FOCUS_ENHANCE,    label: "Resaltar foco"      },
+            { id: "a11y-dyslexic",        key: "dyslexic",       storageKey: this.KEYS.DYSLEXIC,         label: "Fuente legible"     },
+            { id: "a11y-underline-links", key: "underlineLinks", storageKey: this.KEYS.UNDERLINE_LINKS,  label: "Subrayar enlaces"   },
+        ];
+
+        toggles.forEach(({ id, key, storageKey, label }) => {
+            document.getElementById(id)?.addEventListener("click", () => {
+                this.state[key] = !this.state[key];
+                localStorage.setItem(storageKey, this.state[key]);
+                this.applyAll();
+                UserPreferences.announce(`${label} ${this.state[key] ? "activado" : "desactivado"}.`);
+            });
+        });
+
+        document.getElementById("a11y-reset")?.addEventListener("click", () => this.resetAll());
+    },
+
+    adjustScale(delta) {
+        const next = parseFloat(Math.min(1.4, Math.max(0.8, this.state.textScale + delta)).toFixed(1));
+        this.setScale(next);
+    },
+
+    setScale(scale) {
+        this.state.textScale = scale;
+        localStorage.setItem(this.KEYS.TEXT_SCALE, scale);
+        document.documentElement.style.setProperty("--a11y-text-scale", scale);
+        UserPreferences.announce(`Tamaño de texto: ${Math.round(scale * 100)}%.`);
+        this.syncButtonStates();
+    },
+
+    togglePanel() {
+        this.state.isOpen ? this.closePanel() : this.openPanel();
+    },
+
+    openPanel() {
+        const toggle = document.getElementById("a11y-toggle");
+        const panel  = document.getElementById("a11y-panel");
+        this.state.isOpen = true;
+        toggle?.setAttribute("aria-expanded", "true");
+        panel?.removeAttribute("hidden");
+        window.setTimeout(() => document.getElementById("a11y-close")?.focus(), 60);
+    },
+
+    closePanel() {
+        const toggle = document.getElementById("a11y-toggle");
+        const panel  = document.getElementById("a11y-panel");
+        this.state.isOpen = false;
+        toggle?.setAttribute("aria-expanded", "false");
+        panel?.setAttribute("hidden", "");
+        toggle?.focus();
+    },
+
+    syncButtonStates() {
+        const map = {
+            "a11y-high-contrast":  this.state.highContrast,
+            "a11y-reduce-motion":  this.state.reduceMotion,
+            "a11y-focus-enhance":  this.state.focusEnhance,
+            "a11y-dyslexic":       this.state.dyslexic,
+            "a11y-underline-links": this.state.underlineLinks,
+        };
+
+        Object.entries(map).forEach(([id, active]) => {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+            btn.setAttribute("aria-pressed", String(active));
+            btn.classList.toggle("is-active", active);
+        });
+
+        const resetBtn = document.getElementById("a11y-text-reset-size");
+        if (resetBtn) {
+            resetBtn.setAttribute("aria-label",
+                `Restablecer tamaño de texto (actual: ${Math.round(this.state.textScale * 100)}%)`
+            );
+        }
+    },
+
+    resetAll() {
+        Object.values(this.KEYS).forEach((k) => localStorage.removeItem(k));
+        this.state.textScale     = 1;
+        this.state.highContrast  = false;
+        this.state.reduceMotion  = false;
+        this.state.focusEnhance  = false;
+        this.state.dyslexic      = false;
+        this.state.underlineLinks = false;
+        document.documentElement.style.removeProperty("--a11y-text-scale");
+        this.applyAll();
+        UserPreferences.announce("Opciones de accesibilidad restablecidas.");
+    },
 };
 
 if (document.readyState === "loading") {
