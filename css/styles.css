@@ -892,6 +892,88 @@ body.a11y-reduce-motion *::after {
     .a11y-widget__panel { right: -0.5rem; width: 260px; }
 }
 
+/* ── language toggle ── */
+.lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.65rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    flex-shrink: 0;
+}
+.lang-toggle:hover {
+    color: var(--accent);
+    border-color: var(--border-hover);
+    background: rgba(201, 167, 99, 0.05);
+}
+.lang-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ── a11y: color blind badge ── */
+.a11y-option__badge {
+    margin-left: auto;
+    min-width: 22px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 4px;
+    border: 1.5px solid var(--border);
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+}
+.a11y-option--cbcycle.is-active .a11y-option__badge {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+}
+
+/* scrollable widget body when content grows */
+.a11y-widget__body {
+    max-height: 370px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+/* ── a11y: line height boost (WCAG 1.4.12) ── */
+body.a11y-line-height p,
+body.a11y-line-height li,
+body.a11y-line-height .faq-item__body p,
+body.a11y-line-height .bento-card p,
+body.a11y-line-height .hero__sub,
+body.a11y-line-height .section__sub { line-height: 2.2; }
+
+/* ── a11y: letter spacing (WCAG 1.4.12 text spacing) ── */
+body.a11y-letter-spacing p,
+body.a11y-letter-spacing li,
+body.a11y-letter-spacing h1,
+body.a11y-letter-spacing h2,
+body.a11y-letter-spacing h3,
+body.a11y-letter-spacing .hero__sub,
+body.a11y-letter-spacing .section__sub {
+    letter-spacing: 0.1em;
+    word-spacing: 0.16em;
+}
+
+/* ── a11y: color blind simulation filters ── */
+html.a11y-deuteranopia { filter: url(#filter-deuteranopia); }
+html.a11y-protanopia   { filter: url(#filter-protanopia); }
+html.a11y-tritanopia   { filter: url(#filter-tritanopia); }
+
 /* ── reduced motion (system preference) ── */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
