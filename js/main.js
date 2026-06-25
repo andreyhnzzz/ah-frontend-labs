@@ -276,7 +276,7 @@ function setupGallery() {
 </svg>`
         },
         {
-            name: "Dolce &amp; Gabbana",
+            name: "Dolce & Gabbana",
             svg: `<svg viewBox="0 0 200 118" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <text x="50" y="84" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="62" font-weight="400" font-style="italic">D</text>
   <text x="102" y="76" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="36" font-weight="300">&amp;</text>
@@ -365,7 +365,6 @@ function setupGallery() {
     let originLeft = 0;
     let moved      = false;          /* distingue click de arrastre */
 
-
     function dragStart(e) {
         /* solo boton primario del mouse; ignorar touch (touch usa scroll nativo) */
         if (e.pointerType === "touch") return;
@@ -437,15 +436,19 @@ const A11y = {
 
     load() {
         const get = k => localStorage.getItem(k);
-        this.state.textScale      = parseFloat(get(this.KEYS.TEXT_SCALE)) || 1;
-        this.state.highContrast   = get(this.KEYS.HIGH_CONTRAST)   === "true";
-        this.state.reduceMotion   = get(this.KEYS.REDUCE_MOTION)   === "true";
-        this.state.focusEnhance   = get(this.KEYS.FOCUS_ENHANCE)   === "true";
-        this.state.dyslexic       = get(this.KEYS.DYSLEXIC)        === "true";
-        this.state.underlineLinks = get(this.KEYS.UNDERLINE_LINKS) === "true";
-        this.state.lineHeight     = get(this.KEYS.LINE_HEIGHT)     === "true";
-        this.state.letterSpacing  = get(this.KEYS.LETTER_SPACING)  === "true";
-        this.state.colorBlind     = CB_CYCLE.includes(get(this.KEYS.COLOR_BLIND))
+        this.state.textScale = parseFloat(get(this.KEYS.TEXT_SCALE)) || 1;
+
+        [
+            ["highContrast",   this.KEYS.HIGH_CONTRAST],
+            ["reduceMotion",   this.KEYS.REDUCE_MOTION],
+            ["focusEnhance",   this.KEYS.FOCUS_ENHANCE],
+            ["dyslexic",       this.KEYS.DYSLEXIC],
+            ["underlineLinks", this.KEYS.UNDERLINE_LINKS],
+            ["lineHeight",     this.KEYS.LINE_HEIGHT],
+            ["letterSpacing",  this.KEYS.LETTER_SPACING],
+        ].forEach(([prop, key]) => { this.state[prop] = get(key) === "true"; });
+
+        this.state.colorBlind = CB_CYCLE.includes(get(this.KEYS.COLOR_BLIND))
             ? get(this.KEYS.COLOR_BLIND) : "off";
     },
 
@@ -571,9 +574,11 @@ const A11y = {
             const badge = cbBtn.querySelector(".a11y-option__badge");
             if (badge) badge.textContent = label;
         }
+        const lang = document.documentElement.lang || "es";
+        const pct  = Math.round(this.state.textScale * 100);
         document.getElementById("a11y-text-reset-size")?.setAttribute(
             "aria-label",
-            `Restablecer tamano de texto (actual: ${Math.round(this.state.textScale * 100)}%)`
+            lang === "en" ? `Reset text size (current: ${pct}%)` : `Restablecer tamaño de texto (actual: ${pct}%)`
         );
     },
 
@@ -586,7 +591,8 @@ const A11y = {
         });
         document.documentElement.style.removeProperty("--a11y-text-scale");
         this.apply();
-        announce("Opciones de accesibilidad restablecidas.");
+        const lang = document.documentElement.lang || "es";
+        announce(lang === "en" ? "Accessibility options reset." : "Opciones de accesibilidad restablecidas.");
     },
 };
 
@@ -648,16 +654,16 @@ function setupFAQ() {
     });
 }
 
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-} else {
-    init();
-}
-
 function init() {
     setupReveal();
     setupGallery();
     setupFAQ();
     setupI18n();
     A11y.init();
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+} else {
+    init();
 }
