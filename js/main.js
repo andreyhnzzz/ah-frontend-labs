@@ -1,3 +1,140 @@
+/* ── translations ── */
+const TRANSLATIONS = {
+    es: {
+        skip: "Saltar al contenido principal",
+        "nav.collection": "Colección", "nav.wholesale": "Mayoreo", "nav.contact": "Contacto",
+        "hero.eyebrow": "Ciudad Quesada · Costa Rica",
+        "hero.title": "Fragancias que definen una presencia.",
+        "hero.sub": "Diseñador, árabes y de nicho. Selección curada para quienes buscan lo memorable.",
+        "hero.cta": "Explorar colección",
+        "gallery.eyebrow": "Catálogo", "gallery.title": "Colección Exclusiva",
+        "gallery.sub": "Algunas de nuestras fragancias disponibles",
+        "gallery.aria": "Galería de fragancias",
+        "promise.eyebrow": "Compromiso", "promise.title": "Nuestra Promesa",
+        "bento.shipping.title": "Envíos Confiables",
+        "bento.shipping.body": "A todo el país, empacado con protección premium.",
+        "bento.delivery.title": "Entregas Personales",
+        "bento.delivery.body": "En Ciudad Quesada, sin costo de envío.",
+        "bento.guarantee.title": "Garantía de Integridad",
+        "bento.guarantee.body": "Si llega dañado, te lo reponemos gratis.",
+        "bento.payment.title": "Sinpe Móvil",
+        "bento.payment.body": "Pago directo, rápido y seguro.",
+        "wholesale.eyebrow": "Descuentos especiales", "wholesale.title": "Precios al Mayoreo",
+        "wholesale.body": "A partir de 5 piezas obtienes descuento especial. Mantén tu descuento comprando 1 frasco al mes.",
+        "wholesale.cta": "Consultar precios al mayoreo",
+        "contact.eyebrow": "Canales", "contact.title": "Conecta con Nosotros",
+        "contact.whatsapp": "Chatear con el fundador",
+        "contact.instagram": "Ver catálogo visual",
+        "contact.tiktok": "Nuestras tendencias",
+        "faq.eyebrow": "FAQ", "faq.title": "Preguntas Frecuentes",
+        "faq.q1": "¿Cuánto tarda el envío fuera de Ciudad Quesada?",
+        "faq.a1": "Los envíos se procesan en 24 horas y llegan a su destino en un máximo de 3 días hábiles.",
+        "faq.q2": "¿Qué métodos de pago aceptan?",
+        "faq.a2": "Aceptamos Sinpe Móvil al +506 6480 1512, transferencia bancaria y efectivo para entregas personales.",
+        "faq.q3": "¿Cuál es la política de devoluciones?",
+        "faq.a3": "Si el producto llega dañado, lo reponemos gratis. Escríbenos con fotos del paquete y del frasco el mismo día de la entrega.",
+        "faq.q4": "¿Cómo puedo pedir al mayoreo?",
+        "faq.a4": "Contáctanos por WhatsApp para revisar disponibilidad, fragancias y precios especiales desde 5 piezas.",
+        "footer.tagline": "Fragancias que dejan huella.",
+        "footer.copy": "© 2026 Enigma Essence · Ciudad Quesada, Costa Rica",
+        "a11y.title": "Accesibilidad", "a11y.text-size": "Tamaño de texto",
+        "a11y.high-contrast": "Alto contraste", "a11y.reduce-motion": "Reducir movimiento",
+        "a11y.focus-enhance": "Resaltar foco", "a11y.dyslexic": "Fuente legible",
+        "a11y.underline-links": "Subrayar enlaces",
+        "a11y.line-height": "Espaciado de linea",
+        "a11y.letter-spacing": "Espaciado de letras",
+        "a11y.color-blind": "Modo daltonismo",
+        "a11y.reset": "Restablecer todo",
+        "a11y.legal": "Ley N° 7600 · CFIA · WCAG 2.1 AA",
+        "lang.btn": "EN", "lang.label": "Switch to English",
+        "cb.deut": "D", "cb.prot": "P", "cb.trit": "T",
+        "cb.announce.deut": "Modo deuteranopia activado.",
+        "cb.announce.prot": "Modo protanopia activado.",
+        "cb.announce.trit": "Modo tritanopia activado.",
+        "cb.announce.off":  "Modo daltonismo desactivado.",
+    },
+    en: {
+        skip: "Skip to main content",
+        "nav.collection": "Collection", "nav.wholesale": "Wholesale", "nav.contact": "Contact",
+        "hero.eyebrow": "Ciudad Quesada · Costa Rica",
+        "hero.title": "Fragrances that define a presence.",
+        "hero.sub": "Designer, Arabic, and niche. A curated selection for those who seek the memorable.",
+        "hero.cta": "Explore collection",
+        "gallery.eyebrow": "Catalog", "gallery.title": "Exclusive Collection",
+        "gallery.sub": "Some of our available fragrances",
+        "gallery.aria": "Fragrance gallery",
+        "promise.eyebrow": "Commitment", "promise.title": "Our Promise",
+        "bento.shipping.title": "Reliable Shipping",
+        "bento.shipping.body": "Nationwide, packed with premium protection.",
+        "bento.delivery.title": "Personal Deliveries",
+        "bento.delivery.body": "In Ciudad Quesada, no shipping cost.",
+        "bento.guarantee.title": "Integrity Guarantee",
+        "bento.guarantee.body": "If it arrives damaged, we replace it for free.",
+        "bento.payment.title": "Sinpe Móvil",
+        "bento.payment.body": "Direct, fast, and secure payment.",
+        "wholesale.eyebrow": "Special discounts", "wholesale.title": "Wholesale Prices",
+        "wholesale.body": "From 5 pieces you get a special discount. Keep your discount by purchasing 1 bottle per month.",
+        "wholesale.cta": "Inquire about wholesale prices",
+        "contact.eyebrow": "Channels", "contact.title": "Connect With Us",
+        "contact.whatsapp": "Chat with the founder",
+        "contact.instagram": "View visual catalog",
+        "contact.tiktok": "Our trends",
+        "faq.eyebrow": "FAQ", "faq.title": "Frequently Asked Questions",
+        "faq.q1": "How long does shipping take outside Ciudad Quesada?",
+        "faq.a1": "Orders are processed within 24 hours and arrive within 3 business days.",
+        "faq.q2": "What payment methods do you accept?",
+        "faq.a2": "We accept Sinpe Móvil at +506 6480 1512, bank transfer, and cash for personal deliveries.",
+        "faq.q3": "What is your return policy?",
+        "faq.a3": "If the product arrives damaged, we replace it for free. Send us photos of the package and bottle the same day of delivery.",
+        "faq.q4": "How can I order wholesale?",
+        "faq.a4": "Contact us via WhatsApp to check availability, fragrances, and special prices from 5 pieces.",
+        "footer.tagline": "Fragrances that leave a mark.",
+        "footer.copy": "© 2026 Enigma Essence · Ciudad Quesada, Costa Rica",
+        "a11y.title": "Accessibility", "a11y.text-size": "Text size",
+        "a11y.high-contrast": "High contrast", "a11y.reduce-motion": "Reduce motion",
+        "a11y.focus-enhance": "Highlight focus", "a11y.dyslexic": "Readable font",
+        "a11y.underline-links": "Underline links",
+        "a11y.line-height": "Line spacing",
+        "a11y.letter-spacing": "Letter spacing",
+        "a11y.color-blind": "Color blind mode",
+        "a11y.reset": "Reset all",
+        "a11y.legal": "Law 7600 · CFIA · WCAG 2.1 AA",
+        "lang.btn": "ES", "lang.label": "Cambiar a español",
+        "cb.deut": "D", "cb.prot": "P", "cb.trit": "T",
+        "cb.announce.deut": "Deuteranopia mode on.",
+        "cb.announce.prot": "Protanopia mode on.",
+        "cb.announce.trit": "Tritanopia mode on.",
+        "cb.announce.off":  "Color blind mode off.",
+    },
+};
+
+function applyLang(lang) {
+    const t = TRANSLATIONS[lang];
+    document.documentElement.lang = lang;
+    localStorage.setItem("lang", lang);
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    const track = document.getElementById("gallery-track");
+    if (track) track.setAttribute("aria-label", t["gallery.aria"]);
+
+    const btn = document.getElementById("lang-toggle");
+    if (btn) { btn.textContent = t["lang.btn"]; btn.setAttribute("aria-label", t["lang.label"]); }
+}
+
+function setupI18n() {
+    const saved = localStorage.getItem("lang") || "es";
+    applyLang(saved);
+    document.getElementById("lang-toggle")?.addEventListener("click", () => {
+        const next = document.documentElement.lang === "es" ? "en" : "es";
+        applyLang(next);
+        announce(next === "en" ? "Language switched to English." : "Idioma cambiado a español.");
+    });
+}
+
 function announce(message) {
     const region = document.getElementById("announcements");
     if (!region) return;
@@ -266,6 +403,9 @@ function setupGallery() {
     track.addEventListener("pointerleave", dragEnd);
 }
 
+const CB_CYCLE = ["off", "deut", "prot", "trit"];
+const CB_CLASS = { deut: "a11y-deuteranopia", prot: "a11y-protanopia", trit: "a11y-tritanopia" };
+
 const A11y = {
     KEYS: {
         HIGH_CONTRAST:   "a11y-high-contrast",
@@ -273,6 +413,9 @@ const A11y = {
         FOCUS_ENHANCE:   "a11y-focus-enhance",
         DYSLEXIC:        "a11y-dyslexic",
         UNDERLINE_LINKS: "a11y-underline-links",
+        LINE_HEIGHT:     "a11y-line-height",
+        LETTER_SPACING:  "a11y-letter-spacing",
+        COLOR_BLIND:     "a11y-color-blind",
         TEXT_SCALE:      "a11y-text-scale",
     },
 
@@ -280,32 +423,38 @@ const A11y = {
         isOpen: false, textScale: 1,
         highContrast: false, reduceMotion: false,
         focusEnhance: false, dyslexic: false, underlineLinks: false,
+        lineHeight: false, letterSpacing: false, colorBlind: "off",
     },
 
-    init() {
-        this.load();
-        this.apply();
-        this.wire();
-    },
+    init() { this.load(); this.apply(); this.wire(); },
 
     load() {
         const get = k => localStorage.getItem(k);
-        this.state.textScale     = parseFloat(get(this.KEYS.TEXT_SCALE)) || 1;
-        this.state.highContrast  = get(this.KEYS.HIGH_CONTRAST)   === "true";
-        this.state.reduceMotion  = get(this.KEYS.REDUCE_MOTION)   === "true";
-        this.state.focusEnhance  = get(this.KEYS.FOCUS_ENHANCE)   === "true";
-        this.state.dyslexic      = get(this.KEYS.DYSLEXIC)        === "true";
+        this.state.textScale      = parseFloat(get(this.KEYS.TEXT_SCALE)) || 1;
+        this.state.highContrast   = get(this.KEYS.HIGH_CONTRAST)   === "true";
+        this.state.reduceMotion   = get(this.KEYS.REDUCE_MOTION)   === "true";
+        this.state.focusEnhance   = get(this.KEYS.FOCUS_ENHANCE)   === "true";
+        this.state.dyslexic       = get(this.KEYS.DYSLEXIC)        === "true";
         this.state.underlineLinks = get(this.KEYS.UNDERLINE_LINKS) === "true";
+        this.state.lineHeight     = get(this.KEYS.LINE_HEIGHT)     === "true";
+        this.state.letterSpacing  = get(this.KEYS.LETTER_SPACING)  === "true";
+        this.state.colorBlind     = CB_CYCLE.includes(get(this.KEYS.COLOR_BLIND))
+            ? get(this.KEYS.COLOR_BLIND) : "off";
     },
 
     apply() {
         const s = this.state;
         document.documentElement.style.setProperty("--a11y-text-scale", s.textScale);
-        document.body.classList.toggle("a11y-high-contrast",  s.highContrast);
-        document.body.classList.toggle("a11y-reduce-motion",  s.reduceMotion);
-        document.body.classList.toggle("a11y-focus-enhance",  s.focusEnhance);
-        document.body.classList.toggle("a11y-dyslexic",       s.dyslexic);
+        document.body.classList.toggle("a11y-high-contrast",   s.highContrast);
+        document.body.classList.toggle("a11y-reduce-motion",   s.reduceMotion);
+        document.body.classList.toggle("a11y-focus-enhance",   s.focusEnhance);
+        document.body.classList.toggle("a11y-dyslexic",        s.dyslexic);
         document.body.classList.toggle("a11y-underline-links", s.underlineLinks);
+        document.body.classList.toggle("a11y-line-height",     s.lineHeight);
+        document.body.classList.toggle("a11y-letter-spacing",  s.letterSpacing);
+        /* color blind: remove all filter classes then apply active one */
+        Object.values(CB_CLASS).forEach(c => document.documentElement.classList.remove(c));
+        if (s.colorBlind !== "off") document.documentElement.classList.add(CB_CLASS[s.colorBlind]);
         this.sync();
     },
 
@@ -315,8 +464,7 @@ const A11y = {
         if (!toggle) return;
 
         toggle.addEventListener("click", () => this.state.isOpen ? this.close() : this.open());
-        close?.addEventListener("click",  () => this.close());
-
+        close?.addEventListener("click", () => this.close());
         document.addEventListener("keydown", e => {
             if (e.key === "Escape" && this.state.isOpen) this.close();
         });
@@ -330,18 +478,30 @@ const A11y = {
         document.getElementById("a11y-text-reset-size")?.addEventListener("click", () => this.setScale(1));
 
         [
-            { id: "a11y-high-contrast",   key: "highContrast",   sk: this.KEYS.HIGH_CONTRAST,   label: "Alto contraste"     },
-            { id: "a11y-reduce-motion",   key: "reduceMotion",   sk: this.KEYS.REDUCE_MOTION,   label: "Reducir movimiento" },
-            { id: "a11y-focus-enhance",   key: "focusEnhance",   sk: this.KEYS.FOCUS_ENHANCE,   label: "Resaltar foco"      },
-            { id: "a11y-dyslexic",        key: "dyslexic",       sk: this.KEYS.DYSLEXIC,        label: "Fuente legible"     },
-            { id: "a11y-underline-links", key: "underlineLinks", sk: this.KEYS.UNDERLINE_LINKS, label: "Subrayar enlaces"   },
-        ].forEach(({ id, key, sk, label }) => {
+            { id: "a11y-high-contrast",   key: "highContrast",   sk: this.KEYS.HIGH_CONTRAST },
+            { id: "a11y-reduce-motion",   key: "reduceMotion",   sk: this.KEYS.REDUCE_MOTION },
+            { id: "a11y-focus-enhance",   key: "focusEnhance",   sk: this.KEYS.FOCUS_ENHANCE },
+            { id: "a11y-dyslexic",        key: "dyslexic",       sk: this.KEYS.DYSLEXIC },
+            { id: "a11y-underline-links", key: "underlineLinks", sk: this.KEYS.UNDERLINE_LINKS },
+            { id: "a11y-line-height",     key: "lineHeight",     sk: this.KEYS.LINE_HEIGHT },
+            { id: "a11y-letter-spacing",  key: "letterSpacing",  sk: this.KEYS.LETTER_SPACING },
+        ].forEach(({ id, key, sk }) => {
             document.getElementById(id)?.addEventListener("click", () => {
                 this.state[key] = !this.state[key];
                 localStorage.setItem(sk, this.state[key]);
                 this.apply();
-                announce(`${label} ${this.state[key] ? "activado" : "desactivado"}.`);
             });
+        });
+
+        /* color blind: cycle through modes */
+        document.getElementById("a11y-color-blind")?.addEventListener("click", () => {
+            const idx  = CB_CYCLE.indexOf(this.state.colorBlind);
+            const next = CB_CYCLE[(idx + 1) % CB_CYCLE.length];
+            this.state.colorBlind = next;
+            localStorage.setItem(this.KEYS.COLOR_BLIND, next);
+            this.apply();
+            const lang = document.documentElement.lang || "es";
+            announce(TRANSLATIONS[lang][`cb.announce.${next}`] || "");
         });
 
         document.getElementById("a11y-reset")?.addEventListener("click", () => this.reset());
@@ -362,8 +522,7 @@ const A11y = {
     open() {
         this.state.isOpen = true;
         document.getElementById("a11y-toggle")?.setAttribute("aria-expanded", "true");
-        const panel = document.getElementById("a11y-panel");
-        panel?.removeAttribute("hidden");
+        document.getElementById("a11y-panel")?.removeAttribute("hidden");
         setTimeout(() => document.getElementById("a11y-close")?.focus(), 60);
     },
 
@@ -381,6 +540,8 @@ const A11y = {
             "a11y-focus-enhance":  this.state.focusEnhance,
             "a11y-dyslexic":       this.state.dyslexic,
             "a11y-underline-links": this.state.underlineLinks,
+            "a11y-line-height":    this.state.lineHeight,
+            "a11y-letter-spacing": this.state.letterSpacing,
         };
         Object.entries(map).forEach(([id, active]) => {
             const btn = document.getElementById(id);
@@ -388,6 +549,19 @@ const A11y = {
             btn.setAttribute("aria-pressed", String(active));
             btn.classList.toggle("is-active", active);
         });
+        /* color blind button */
+        const cbBtn = document.getElementById("a11y-color-blind");
+        if (cbBtn) {
+            const mode   = this.state.colorBlind;
+            const active = mode !== "off";
+            cbBtn.setAttribute("aria-pressed", String(active));
+            cbBtn.classList.toggle("is-active", active);
+            cbBtn.dataset.cbmode = mode;
+            const lang  = document.documentElement.lang || "es";
+            const label = active ? (TRANSLATIONS[lang][`cb.${mode}`] || mode.toUpperCase()) : "—";
+            const badge = cbBtn.querySelector(".a11y-option__badge");
+            if (badge) badge.textContent = label;
+        }
         document.getElementById("a11y-text-reset-size")?.setAttribute(
             "aria-label",
             `Restablecer tamano de texto (actual: ${Math.round(this.state.textScale * 100)}%)`
@@ -399,6 +573,7 @@ const A11y = {
         Object.assign(this.state, {
             textScale: 1, highContrast: false, reduceMotion: false,
             focusEnhance: false, dyslexic: false, underlineLinks: false,
+            lineHeight: false, letterSpacing: false, colorBlind: "off",
         });
         document.documentElement.style.removeProperty("--a11y-text-scale");
         this.apply();
@@ -474,5 +649,6 @@ function init() {
     setupReveal();
     setupGallery();
     setupFAQ();
+    setupI18n();
     A11y.init();
 }
