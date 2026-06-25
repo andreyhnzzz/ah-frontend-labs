@@ -364,7 +364,7 @@ function setupGallery() {
     let startX     = 0;
     let originLeft = 0;
     let moved      = false;          /* distingue click de arrastre */
-    const SNAP_PROP = "scroll-snap-type";
+
 
     function dragStart(e) {
         /* solo boton primario del mouse; ignorar touch (touch usa scroll nativo) */
@@ -522,7 +522,9 @@ const A11y = {
         this.state.textScale = v;
         localStorage.setItem(this.KEYS.TEXT_SCALE, v);
         document.documentElement.style.setProperty("--a11y-text-scale", v);
-        announce(`Tamano de texto: ${Math.round(v * 100)}%.`);
+        const lang = document.documentElement.lang || "es";
+        const pct  = Math.round(v * 100);
+        announce(lang === "en" ? `Text size: ${pct}%.` : `Tamaño de texto: ${pct}%.`);
         this.sync();
     },
 

@@ -367,16 +367,12 @@ ul, ol { list-style: none; }
     position: relative;
 }
 
-/* la imagen cubre el skeleton sin alterar el flujo del contenedor */
 .gallery-item img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-}
-
-.gallery-item img {
     transition: transform 0.45s ease, filter 0.45s ease;
     will-change: transform;
 }
