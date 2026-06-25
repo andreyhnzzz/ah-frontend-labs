@@ -345,9 +345,16 @@ function setupGallery() {
     ];
 
     brands.forEach(({ name, svg }) => {
-        const item = document.createElement("article");
+        const msg = encodeURIComponent(
+            `Hola, le contacto desde la pagina de enigma essence. Me gustaría conocer el catálogo disponible de ${name}. ¿Qué tienen disponible? Gracias.`
+        );
+        const item = document.createElement("a");
         item.className = "gallery-item gallery-item--brand";
         item.setAttribute("role", "listitem");
+        item.href = `https://wa.me/50664801512?text=${msg}`;
+        item.target = "_blank";
+        item.rel = "noopener noreferrer";
+        item.setAttribute("aria-label", `Consultar catálogo de ${name} por WhatsApp`);
         item.innerHTML = `<div class="brand-logo" aria-hidden="true">${svg}</div><span class="brand-name">${name}</span>`;
         track.appendChild(item);
     });

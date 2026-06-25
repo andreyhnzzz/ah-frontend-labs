@@ -396,7 +396,8 @@ ul, ol { list-style: none; }
     justify-content: center;
     color: var(--text-muted);
     transition: color 0.4s ease, background 0.35s ease, border-color 0.4s ease;
-    cursor: default;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .gallery-item--brand .brand-logo {
